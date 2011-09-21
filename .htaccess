@@ -1,0 +1,11 @@
+RewriteEngine on
+RewriteBase /biblioteca
+Options FollowSymlinks
+RewriteRule ^livro/edita/(.*) index.php?controller=livro&metodo=edita&id=$1 [L]
+RewriteRule ^livro/novo index.php?controller=livro&metodo=novo [L]
+RewriteRule ^livro/apagar/(.*) index.php?controller=livro&metodo=apagar&id=$1 [L]
+RewriteRule ^livro index.php?controller=livro [L]
+RewriteRule ^usuario/edita/(.*) index.php?controller=usuario&metodo=edita&id=$1 [L]
+RewriteRule ^usuario/novo index.php?controller=usuario&metodo=novo [L]
+RewriteRule ^usuario/apagar/(.*) index.php?controller=usuario&metodo=apagar&id=$1 [L]
+RewriteRule ^usuario index.php?controller=usuario [L]
