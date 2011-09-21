@@ -1,0 +1,18 @@
+Projeto desenvolvido com intuito de estudo.
+
+O projeto pretente a implementação simples de uma biblioteca com:
+- Login com diferentes níveis de acesso;
+- CRUD de livros e usuários (para administradores);
+- Edição do tempo devolução padrão;
+- Possibilidade de renovação diretamente na página do usuário;
+- Possibilidade de reserva (caso livro esteja emprestado);
+- Envio de email ao usuário para avisar sobre o fim do prazo;
+- Envio de email ao usuário para avisar caso o livro tenha sido reservado.
+
+Outras infos:
+Linguagem: PHP
+Paradigma: Orientação a objetos
+Padrão de desenvolvimento: Model-View-Controller
+Banco de Dados: MySQL
+
+Em função da url's mais amigáveis, é importante que o mod_rewrite seja habilitado no Apache.
