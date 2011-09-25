@@ -14,7 +14,7 @@ class LivroModel {
     );
 
     public function __construct() {
-    
+        
     }
 
     /*
@@ -68,7 +68,10 @@ class LivroModel {
     public function salvaLivro() {
         $titulo = $this->getTitulo();
         $autor = $this->getAutor();
-        $sql = "INSERT INTO livros (titulo, autor) VALUES ('$titulo', '$autor')";
+        $ano = $this->getAno();
+        $editora = $this->getEditora();
+
+        $sql = "INSERT INTO livros (titulo, autor, ano, editora) VALUES ('$titulo', '$autor', $ano, '$editora')";
         $conn = mysql_connect($this->db['host'], $this->db['adm'], $this->db['senha']) or die(mysql_error());
         mysql_select_db($this->db['banco']);
         $status = mysql_query($sql, $conn);
@@ -104,7 +107,10 @@ class LivroModel {
         $id = $this->getId();
         $titulo = $this->getTitulo();
         $autor = $this->getAutor();
-        $sql = "UPDATE  livros SET  titulo = '$titulo', autor = '$autor' WHERE  idlivros =$id";
+        $ano = $this->getAno();
+        $editora = $this->getEditora();
+
+        $sql = "UPDATE  livros SET  titulo = '$titulo', autor = '$autor', ano='$ano', editora='$editora' WHERE  idlivros =$id";
         $conn = mysql_connect($this->db['host'], $this->db['adm'], $this->db['senha']) or die(mysql_error());
         mysql_select_db($this->db['banco']);
         $status = mysql_query($sql, $conn);

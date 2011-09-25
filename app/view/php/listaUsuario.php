@@ -7,7 +7,7 @@
         <th colspan="2">Opções</th>
     </tr>
     <?php
-    while ($usuario = mysql_fetch_array($lista)) {
+    foreach ($lista as $usuario) {
         echo '<tr>';
         echo '<td>' . $usuario['nome'] . '</td>';
         echo '<td>' . $usuario['login'] . '</td>';

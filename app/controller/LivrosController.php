@@ -25,8 +25,16 @@ class LivrosController {
      */
 
     public function index() {
-        $lista = $this->mdl->listaLivros();
-        $this->vw->listaLivro($lista);
+        if ($_SESSION['privilegio'] == 'Administrador') {
+            $this->vw->adm();
+            $lista = $this->mdl->listaLivros();
+            $this->vw->listaLivro($lista);
+        } else {
+            $this->vw->normal();
+            $lista = $this->mdl->listaLivros();
+            $this->vw->listaLivro($lista);
+        }
+        $this->vw->footer();
     }
 
     /*
@@ -36,19 +44,32 @@ class LivrosController {
      */
 
     public function novo() {
-        if (isset($_POST['titulo']) && isset($_POST['autor'])) {
-            $titulo = $_POST['titulo'];
-            $autor = $_POST['autor'];
+        if ($_SESSION['privilegio'] == 'Administrador') {
+            if (isset($_POST['titulo']) && isset($_POST['autor'])) {
+                $titulo = $_POST['titulo'];
+                $autor = $_POST['autor'];
+                $ano = $_POST['ano'];
+                $editora = $_POST['editora'];
 
-            $this->mdl->setTitulo($titulo);
-            $this->mdl->setAutor($autor);
-            $this->mdl->salvaLivro();
-            // Gambiarra que evita que o usuário possa continuar dando F5 e
-            // ir adicionando dados no BD
-            header('Location: http://localhost/biblioteca/livro/');
+                $this->mdl->setTitulo($titulo);
+                $this->mdl->setAutor($autor);
+                $this->mdl->setAno($ano);
+                $this->mdl->setEditora($editora);
+
+                $this->mdl->salvaLivro();
+                // Gambiarra que evita que o usuário possa continuar dando F5 e
+                // ir adicionando dados no BD
+                header('Location: http://localhost/biblioteca/livro/');
+            } else {
+                $this->vw->adm();
+                $this->vw->formNovoLivro();
+            }
         } else {
-            $this->vw->formNovoLivro();
+            $this->vw->normal();
+            $lista = $this->mdl->listaLivros();
+            $this->vw->listaLivro($lista);
         }
+        $this->vw->footer();
     }
 
     /*
@@ -58,26 +79,40 @@ class LivrosController {
      */
 
     public function edita($id) {
-        if (isset($_POST['titulo']) && isset($_POST['autor'])) {
-            $titulo = $_POST['titulo'];
-            $autor = $_POST['autor'];
-            $id = $_POST['id'];
-            $this->mdl->setId($id);
-            $this->mdl->setTitulo($titulo);
-            $this->mdl->setAutor($autor);
-            $this->mdl->updateLivro();
-            // Gambiarra que evita que o usuário possa continuar dando F5 e
-            // ir adicionando dados no BD
-            header('Location: http://localhost/biblioteca/livro/');
-        } else {
-            if ($id != NULL) {
+        if ($_SESSION['privilegio'] == 'Administrador') {
+            if (isset($_POST['titulo']) && isset($_POST['autor'])) {
+                $titulo = $_POST['titulo'];
+                $autor = $_POST['autor'];
+                $ano = $_POST['ano'];
+                $editora = $_POST['editora'];
+                $id = $_POST['id'];
+
                 $this->mdl->setId($id);
-                $lista = $this->mdl->buscaLivro();
-                $this->vw->editaLivro($lista);
+                $this->mdl->setTitulo($titulo);
+                $this->mdl->setAutor($autor);
+                $this->mdl->setAno($ano);
+                $this->mdl->setEditora($editora);
+                $this->mdl->updateLivro();
+                // Gambiarra que evita que o usuário possa continuar dando F5 e
+                // ir adicionando dados no BD
+                header('Location: http://localhost/biblioteca/livro/');
             } else {
-                $this->index();
+                if ($id != NULL) {
+                    $this->mdl->setId($id);
+                    $lista = $this->mdl->buscaLivro();
+                    $this->vw->adm();
+                    $this->vw->editaLivro($lista);
+                    $this->vw->footer();
+                } else {
+                    $this->index();
+                }
             }
+        } else {
+            $this->vw->normal();
+            $lista = $this->mdl->listaLivros();
+            $this->vw->listaLivro($lista);
         }
+        $this->vw->footer();
     }
 
     /*
