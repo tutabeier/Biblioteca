@@ -31,6 +31,7 @@ if (isset($_SESSION['privilegio'])) {
 } else {
     $privilegio = '';
 }
+
 /*
  * Executa o método do controller passado pela URL.
  * Caso nada seja passado, imprime a página index.
